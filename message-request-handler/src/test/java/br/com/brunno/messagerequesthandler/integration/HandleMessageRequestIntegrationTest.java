@@ -3,28 +3,44 @@ package br.com.brunno.messagerequesthandler.integration;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+
+import br.com.brunno.messagerequesthandler.domain.MessageSender;
+import br.com.brunno.messagerequesthandler.domain.entity.MessageRequest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import br.com.brunno.messagerequesthandler.controller.dto.MessageRequestPayload;
 import br.com.brunno.messagerequesthandler.controller.dto.MessageStatus;
 import br.com.brunno.messagerequesthandler.controller.dto.ReceiptDto;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 @SpringBootTest(webEnvironment=RANDOM_PORT)
 public class HandleMessageRequestIntegrationTest {
     
     @Autowired
     TestRestTemplate restTemplate;
 
+    @MockBean
+    MessageSender messageSender;
+
     @Test
     void sendMessageShouldEnqueueMessage() {
+        doReturn(true).when(messageSender).sendMessage(any());
+
         // message request payload
         MessageRequestPayload messageRequest = new MessageRequestPayload();
         messageRequest.setFrom("foo");

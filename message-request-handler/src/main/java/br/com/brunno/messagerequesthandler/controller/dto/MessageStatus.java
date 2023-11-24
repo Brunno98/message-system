@@ -14,8 +14,8 @@ public class MessageStatus {
     
     public static MessageStatus from(MessageRequest messageRequest) {
         MessageStatus messageStatus = new MessageStatus();
-        messageStatus.setFrom(messageRequest.getFromFoo());
-        messageStatus.setTo(messageRequest.getToFoo());
+        messageStatus.setFrom(messageRequest.getFrom());
+        messageStatus.setTo(messageRequest.getTo());
         messageStatus.setMessage(messageRequest.getMessage());
         messageStatus.setStatus(messageRequest.getStatus());
         return messageStatus;

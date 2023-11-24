@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -53,10 +52,10 @@ public class MessageControllerTest {
     @Test
     void getMessageByRequestIdShouldReturn200withMessageStatus() throws Exception {
         MessageRequest messageRequest = new MessageRequest();
-        messageRequest.setFromFoo("foo");
-        messageRequest.setToFoo("bar");
+        messageRequest.setFrom("foo");
+        messageRequest.setTo("bar");
         messageRequest.setMessage("HELLO");
-        messageRequest.setStatus("enqueued");
+        messageRequest.enqueued();
         messageRequest.setRequestId("123");
         doReturn(messageRequest).when(messageService).getMessageRequestById("123");
         

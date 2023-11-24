@@ -1,7 +1,5 @@
 package br.com.brunno.messagerequesthandler.controller;
 
-import java.util.UUID;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +25,8 @@ public class MessageController {
     @PostMapping
     public ResponseEntity<ReceiptDto> sendMesssage(@RequestBody MessageRequestPayload messageRequestPayload) {
         MessageRequest messageRequest = new MessageRequest();
-        messageRequest.setFromFoo(messageRequestPayload.getFrom());
-        messageRequest.setToFoo(messageRequestPayload.getTo());
+        messageRequest.setFrom(messageRequestPayload.getFrom());
+        messageRequest.setTo(messageRequestPayload.getTo());
         messageRequest.setMessage(messageRequestPayload.getMessage());
 
         String requestId = messageService.produceMessage(messageRequest);

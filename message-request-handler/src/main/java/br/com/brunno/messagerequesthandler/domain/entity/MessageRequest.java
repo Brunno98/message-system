@@ -1,9 +1,6 @@
 package br.com.brunno.messagerequesthandler.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +10,10 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 public class MessageRequest {
-    private String fromFoo;
-    private String toFoo;
+    @Column(name = "\"from\"")
+    private String from;
+    @Column(name = "\"to\"")
+    private String to;
     private String message;
     @Setter(AccessLevel.NONE)
     private String status;
