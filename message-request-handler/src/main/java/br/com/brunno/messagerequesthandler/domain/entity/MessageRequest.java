@@ -21,7 +21,11 @@ public class MessageRequest {
     @Id @GeneratedValue(strategy=GenerationType.UUID)
     private String requestId;
 
-    public void statusEnqueued() {
+    public void enqueued() {
         this.status = "enqueued";
+    }
+
+    public void fail() {
+        this.status = "failed";
     }
 }

@@ -21,13 +21,14 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public String produceMessage(MessageRequest messageRequest) {
-        messageRequest.statusEnqueued();
-        boolean success = messageSender.sendMessage(messageRequest);
-
-        if (!success) throw new RuntimeException("Fail to enqueue message");
-
+        messageRequest.enqueued();
         messageRepository.save(messageRequest);
-
+        boolean success = messageSender.sendMessage(messageRequest);
+        if (!success) {
+            messageRequest.fail();
+            messageRepository.save(messageRequest);
+            throw new RuntimeException("Fail to enqueue message");
+        }
         return messageRequest.getRequestId();
     }
 }
