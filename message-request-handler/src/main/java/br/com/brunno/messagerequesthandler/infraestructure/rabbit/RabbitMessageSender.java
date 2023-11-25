@@ -1,6 +1,6 @@
 package br.com.brunno.messagerequesthandler.infraestructure.rabbit;
 
-import br.com.brunno.messagerequesthandler.domain.MessageSender;
+import br.com.brunno.messagerequesthandler.domain.service.MessageSender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

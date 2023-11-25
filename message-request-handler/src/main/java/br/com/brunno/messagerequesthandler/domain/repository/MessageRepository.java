@@ -1,4 +1,4 @@
-package br.com.brunno.messagerequesthandler.domain;
+package br.com.brunno.messagerequesthandler.domain.repository;
 
 import br.com.brunno.messagerequesthandler.domain.entity.MessageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;

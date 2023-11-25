@@ -1,4 +1,4 @@
-package br.com.brunno.messagerequesthandler.domain;
+package br.com.brunno.messagerequesthandler.domain.service;
 
 import br.com.brunno.messagerequesthandler.domain.entity.MessageRequest;
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.brunno.messagerequesthandler.controller.dto.MessageRequestPayload;
 import br.com.brunno.messagerequesthandler.controller.dto.MessageStatus;
 import br.com.brunno.messagerequesthandler.controller.dto.ReceiptDto;
-import br.com.brunno.messagerequesthandler.domain.MessageService;
+import br.com.brunno.messagerequesthandler.domain.service.MessageService;
 import br.com.brunno.messagerequesthandler.domain.entity.MessageRequest;
 import lombok.RequiredArgsConstructor;
 

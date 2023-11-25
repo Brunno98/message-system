@@ -18,12 +18,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.brunno.messagerequesthandler.controller.dto.MessageRequestPayload;
-import br.com.brunno.messagerequesthandler.domain.MessageService;
+import br.com.brunno.messagerequesthandler.domain.service.MessageService;
 import br.com.brunno.messagerequesthandler.domain.entity.MessageRequest;
 
 @WebMvcTest
 public class MessageControllerTest {
-    
+    public static final String SENDER = "foo";
+    public static final String RECEIVER = "receiver";
+    public static final String MESSAGE = "HELLO";
+    public static final String MESSAGE_ID = "123";
+    public static final String ENQUEUED_STATUS = "enqueued";
     private static final ObjectMapper OM = new ObjectMapper();
 
     @Autowired
@@ -34,12 +38,8 @@ public class MessageControllerTest {
 
     @Test
     void postMessageShouldReturn202withGeneratedRequestId() throws JsonProcessingException, Exception {
-        MessageRequestPayload messageRequestPayload = new MessageRequestPayload();
-        messageRequestPayload.setFrom("foo");
-        messageRequestPayload.setTo("bar");
-        messageRequestPayload.setMessage("HELLO");
-
-        doReturn("123").when(messageService).produceMessage(any());
+        doReturn(MESSAGE_ID).when(messageService).produceMessage(any());
+        MessageRequestPayload messageRequestPayload = new MessageRequestPayload(SENDER, RECEIVER, MESSAGE);
 
         mockMvc.perform(post("/message")
             .contentType(MediaType.APPLICATION_JSON)
@@ -52,15 +52,15 @@ public class MessageControllerTest {
     @Test
     void getMessageByRequestIdShouldReturn200withMessageStatus() throws Exception {
         MessageRequest messageRequest = new MessageRequest();
-        messageRequest.setFrom("foo");
-        messageRequest.setTo("bar");
-        messageRequest.setMessage("HELLO");
+        messageRequest.setFrom(SENDER);
+        messageRequest.setTo(RECEIVER);
+        messageRequest.setMessage(MESSAGE);
         messageRequest.enqueued();
-        messageRequest.setRequestId("123");
-        doReturn(messageRequest).when(messageService).getMessageRequestById("123");
+        messageRequest.generateRequestId();
+        doReturn(messageRequest).when(messageService).getMessageRequestById(messageRequest.getRequestId());
         
-        mockMvc.perform(get("/message/{requestId}",  "123"))
+        mockMvc.perform(get("/message/{requestId}",  messageRequest.getRequestId()))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("status").value("enqueued"));
+            .andExpect(jsonPath("status").value(ENQUEUED_STATUS));
     }
 }
