@@ -19,7 +19,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @DirtiesContext
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class MessageControllerIntegrationTest {
-    public static final String MESSAGE_KEY = "key";
+    public static final String MESSAGE_KEY = "KEY";
     public static final String MESSAGE_TEXT = "MESSAGE TEXT";
 
     @Autowired
