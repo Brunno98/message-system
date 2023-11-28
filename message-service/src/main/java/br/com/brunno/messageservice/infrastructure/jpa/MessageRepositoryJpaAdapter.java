@@ -17,4 +17,9 @@ public class MessageRepositoryJpaAdapter implements MessageRepository {
     public Optional<Message> getMessageByKey(String messageKey) {
         return repository.findByMessageKey(messageKey);
     }
+
+    @Override
+    public void save(Message message) {
+        repository.save(message);
+    }
 }

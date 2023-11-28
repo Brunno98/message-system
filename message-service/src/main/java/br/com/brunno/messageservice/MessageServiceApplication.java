@@ -9,27 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @RequiredArgsConstructor
 @SpringBootApplication
-public class MessageServiceApplication implements CommandLineRunner {
+public class MessageServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MessageServiceApplication.class, args);
-	}
-
-	private final MessageRepositoryJpa messageRepository;
-
-	@Override
-	public void run(String... args) throws Exception {
-		if(messageRepository.findByMessageKey("HELLO").isPresent()) {
-			System.out.println("Menssagem existe");
-		} else {
-			Message message = new Message();
-			message.setMessageKey("HELLO");
-			message.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
-					" sed do eiusmod tempor incididunt ut labore et dolore magna" +
-					" aliqua. Massa placerat duis ultricies lacus sed turpis tincidunt. " +
-					"Maecenas ultricies mi eget mauris pharetra et.");
-			messageRepository.save(message);
-			System.out.println("Mensagem criada na inicialização");
-		};
 	}
 }

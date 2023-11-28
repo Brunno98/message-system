@@ -1,5 +1,6 @@
 package br.com.brunno.messageservice.domain.entity;
 
+import br.com.brunno.messageservice.domain.exception.InvalidMessageKeyException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,13 @@ public class Message {
     }
 
     public void setMessageKey(String messageKey) {
-        if (null == messageKey) throw new RuntimeException("messageKey cannot be null!");
-        this.messageKey = messageKey.toUpperCase(Locale.ROOT);
+        if (null == messageKey || messageKey.isBlank()) throw new InvalidMessageKeyException("message field should not be empty");
+        if (!isUpperCase(messageKey)) throw new InvalidMessageKeyException("message field should be uppercase");
+
+        this.messageKey = messageKey;
+    }
+
+    private boolean isUpperCase(String text) {
+        return text.equals(text.toUpperCase(Locale.ROOT));
     }
 }

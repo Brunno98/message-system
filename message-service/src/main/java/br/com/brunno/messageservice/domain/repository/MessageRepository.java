@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface MessageRepository {
     Optional<Message> getMessageByKey(String messageKey);
+
+    void save(Message message);
 }
