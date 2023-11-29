@@ -12,3 +12,57 @@ services:
     image: rabbitmq:3
     ports:
       - "5672:5672"
+
+  message-request-handler:
+    build: ./message-request-handler
+    container_name: message-request-handler
+    depends_on:
+      - db
+      - rabbitmq
+    ports:
+      - "8080:8080"
+    environment:
+        SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url": "jdbc:postgresql://db:5432/postgres",
+            "spring.rabbitmq.host": "rabbitmq"
+          }'
+
+  message-worker:
+    build: ./message-worker
+    container_name: message-worker
+    depends_on:
+      - db
+      - rabbitmq
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url": "jdbc:postgresql://db:5432/postgres",
+            "spring.rabbitmq.host": "rabbitmq",
+            "feign.client.config.text.url": "http://message-service:8080/"
+          }'
+  
+  message-service:
+    build: ./message-service
+    container_name: message-service
+    depends_on:
+      - db
+      - rabbitmq
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+  
+  message-sender:
+    build: ./message-sender
+    container_name: message-sender
+    depends_on:
+      - db
+      - rabbitmq
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url": "jdbc:postgresql://db:5432/postgres",
+            "spring.rabbitmq.host": "rabbitmq"
+          }'

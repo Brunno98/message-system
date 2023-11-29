@@ -2,7 +2,7 @@ FROM eclipse-temurin:17-jdk-alpine AS build
 WORKDIR /app
 
 COPY mvnw mvnw
-# clean up the file 
+# clean up the file
 RUN sed -i 's/\r$//' mvnw
 COPY .mvn .mvn
 
