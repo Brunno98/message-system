@@ -20,7 +20,6 @@ public class QueueConsumer {
 
     @RabbitHandler
     public void handleMessage(String in) throws JsonProcessingException {
-        // TODO: Configurar DLQ
         MessageRequestPayload payload = OM.readValue(in, MessageRequestPayload.class);
 
         MessageRequest messageRequest = payload.toDomain();

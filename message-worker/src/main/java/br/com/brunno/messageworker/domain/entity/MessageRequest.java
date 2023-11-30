@@ -28,11 +28,20 @@ public class MessageRequest {
         this.status = "processing";
     }
 
-    public void precessed() {
+    public void processed() {
         this.status = "processed";
     }
 
     public void failed() {
         this.status = "failed";
+    }
+
+    public Message startProcessing() {
+        Message message = new Message();
+        message.setFrom(this.from);
+        message.setTo(this.to);
+
+        this.processing();
+        return message;
     }
 }
